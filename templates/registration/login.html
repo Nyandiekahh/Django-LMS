@@ -1,0 +1,124 @@
+{% extends 'registration/registration_base.html' %}
+{% load i18n %}
+{% block title %}{% trans 'Learnify - Login' %}{% endblock title %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container-fluid">
+  <div class="row vh-100">
+    <!-- Left Side - Branding -->
+    <div class="col-md-6 bg-primary text-white d-flex flex-column justify-content-center px-5">
+      <h1 class="display-4 fw-bold mb-4">Learnify</h1>
+      <h2 class="h4 mb-4">Welcome to your learning journey</h2>
+      <p class="lead mb-4">Access world-class education resources, track your progress, and connect with expert instructors.</p>
+      <div class="features mt-4">
+        <div class="feature-item mb-3">
+          <i class="fas fa-graduation-cap me-2"></i> Comprehensive Course Library
+        </div>
+        <div class="feature-item mb-3">
+          <i class="fas fa-clock me-2"></i> Learn at Your Own Pace
+        </div>
+        <div class="feature-item mb-3">
+          <i class="fas fa-certificate me-2"></i> Earn Certificates
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side - Login Form -->
+    <div class="col-md-6 d-flex align-items-center justify-content-center">
+      <div class="login-container p-5" style="width: 450px;">
+        <div class="text-center mb-4">
+          <h3 class="fw-bold">Sign In to Learnify</h3>
+          <p class="text-muted">Enter your credentials to access your account</p>
+        </div>
+        
+        <form action="" method="POST" id="login-form" class="needs-validation">
+          {% csrf_token %}
+          <div class="form-group mb-4">
+            <label class="form-label fw-medium" for="username_id">
+              <i class="fas fa-address-card me-2"></i>{% trans 'ID Number' %}
+            </label>
+            <input type="text" name="username" id="username_id" 
+                   class="form-control form-control-lg" required>
+            <div id="message-wrapper"></div>
+          </div>
+
+          <div class="form-group mb-4">
+            <label class="form-label fw-medium" for="password_id">
+              <i class="fas fa-key me-2"></i>{% trans 'Password' %}
+            </label>
+            <div class="input-group">
+              <input type="password" name="password" id="password_id" 
+                     class="form-control form-control-lg" required>
+              <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+
+          {% if form.errors %}
+          <div class="alert alert-danger d-flex align-items-center" role="alert">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            {% trans 'Invalid ID & Password.' %}
+          </div>
+          {% endif %}
+
+          <button type="submit" class="btn btn-primary btn-lg w-100 mb-4" id="login-btn">
+            <i class="fas fa-sign-in-alt me-2"></i>{% trans 'Sign In' %}
+          </button>
+        </form>
+
+        <div class="text-center">
+          <a href="{% url 'password_reset' %}" class="text-decoration-none">
+            {% trans 'Forgot password?' %}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+  $('#login-form').submit(function (e) {
+    $('#login-btn').addClass('disabled')
+    $('#login-btn').html(`<i class="fas fa-spinner fa-spin me-2"></i> Signing in...`)
+  })
+
+  $("#username").on("input", function () {
+    username = $(this).val();
+
+    $.ajax({
+      url: "/accounts/ajax/validate-username/",
+      data: {
+        username: username
+      },
+      dataType: 'json',
+      success: function (data) {
+        if (data.is_taken) {
+          console.log(data.is_taken);
+          $('#message-wrapper').html(`<p class="my-2 text-danger"><span class="bg-error p-2"><b>${username}</b> already taken :( try another one </span></p>`)
+        }
+        else {
+          $('#message-wrapper').html(`<p class="my-2 text-success"><span class="bg-correct p-2"><b>${username}</b> is valid </span></p>`)
+        }
+      }
+    })
+  })
+
+  // Password show/hide functionality
+  const togglePassword = document.querySelector('#togglePassword');
+  const password = document.querySelector('#password_id');
+
+  togglePassword.addEventListener('click', function (e) {
+    // Toggle the type attribute
+    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+    password.setAttribute('type', type);
+    
+    // Toggle the icon
+    this.querySelector('i').classList.toggle('fa-eye');
+    this.querySelector('i').classList.toggle('fa-eye-slash');
+  });
+</script>
+{% endblock %}
