@@ -1,303 +1,425 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Account Confirmation</title>
-    <style>
-      :root {
-        --padding-base: 0.5rem;
-        --primary: #4caf50;
-        --primary-dark: #45a049;
-        --warning: #ffcb00;
-        --warning-dark: #edbe02;
-        --light: #ffffff;
-        --gmail-primary: #ebf0fb;
-        --gmail-secondary: #f6f9fd;
-        --body-color: var(--gmail-primary);
-        --grey-100: #e9e9e9;
-        --grey-200: #cfcfcf;
-        --grey-300: #9d9d9d;
-        --grey-400: #888888;
-        --grey-500: #555555;
-        --dark: #333333;
-      }
+ <head>
+   <title>Learnify Account Confirmation</title>
+   <style>
+     :root {
+       --primary: #2563eb;
+       --primary-dark: #1d4ed8;
+       --primary-gradient: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+       --accent: #f59e0b;
+       --accent-dark: #d97706;
+       --success: #059669;
+       --light: #ffffff;
+       --dark: #0f172a;
+       --gray-50: #f8fafc;
+       --gray-100: #f1f5f9;
+       --gray-200: #e2e8f0;
+       --gray-300: #cbd5e1;
+       --gray-400: #94a3b8;
+       --gray-500: #64748b;
+     }
 
-      /* Reset default styling */
-      body,
-		p,
-		h1,
-		h2,
-		h3
+     * {
+       margin: 0;
+       padding: 0;
+       box-sizing: border-box;
+     }
 
-		/* h4, */
-		/* h5, */
-		/* h6  */ {
-        margin: 0;
-        padding: 0;
-      }
+     body {
+       font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+       color: var(--dark);
+       background: var(--gray-100);
+       line-height: 1.5;
+       padding: 40px 20px;
+     }
 
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
-        color: #012481;
-      }
+     .container {
+       max-width: 700px;
+       margin: 0 auto;
+     }
 
-      h1 {
-        font-size: 28px;
-      }
+     .card {
+       background: var(--light);
+       border-radius: 16px;
+       box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.05);
+       overflow: hidden;
+       position: relative;
+     }
 
-      a {
-        color: #005aeb;
-        text-decoration: none;
-      }
+     .card::before {
+       content: '';
+       position: absolute;
+       top: 0;
+       left: 0;
+       right: 0;
+       height: 4px;
+       background: var(--primary-gradient);
+     }
 
-      p {
-        font-size: 16px;
-        margin-bottom: 15px;
-        color: #46528f;
-      }
+     .header {
+       background: var(--primary-gradient);
+       padding: 40px;
+       text-align: center;
+       position: relative;
+       overflow: hidden;
+       border-bottom: 4px solid var(--accent);
+     }
 
-      th,
-      td {
-        text-align: left;
-      }
+     .header h2 {
+       color: var(--light);
+       font-size: 32px;
+       font-weight: 800;
+       margin: 0;
+       letter-spacing: -0.5px;
+     }
 
-      .header {
-        background-color: #ebf0fb;
-        border-bottom: 1px solid #cfcfcf;
-        padding: 0.5rem 2rem;
-      }
+     .header p {
+       color: var(--gray-200);
+       font-size: 18px;
+       margin: 12px 0 0;
+       opacity: 0.9;
+     }
 
-      .footer {
-        padding: 2rem;
-        text-align: center;
-        background-color: #333333;
-      }
+     .card-body {
+       padding: 48px;
+     }
 
-      .footer p {
-        margin-bottom: 2px;
-        font-size: small;
-      }
+     .welcome-banner {
+       text-align: center;
+       margin-bottom: 40px;
+     }
 
-      .footer p,
-      .footer a {
-        color: #fff !important;
-      }
+     .welcome-banner h1 {
+       color: var(--dark);
+       font-size: 28px;
+       font-weight: 800;
+       margin: 0 0 16px;
+       letter-spacing: -0.5px;
+     }
 
-      .container {
-        width: 600px;
-        max-width: 600px !important;
-        margin: 0 auto;
-      }
+     .welcome-banner p {
+       color: var(--gray-500);
+       font-size: 18px;
+       max-width: 500px;
+       margin: 0 auto;
+     }
 
-      .card {
-        background-color: #fff;
-        border: 1px solid #cfcfcf;
-        border-radius: 5px;
-        overflow: hidden;
-      }
+     .content-section {
+       background: var(--gray-50);
+       border-radius: 12px;
+       padding: 32px;
+       margin-bottom: 32px;
+     }
 
-      .card-body {
-        padding: 1.5rem 2rem;
-      }
+     .content-section h4 {
+       color: var(--dark);
+       font-size: 20px;
+       font-weight: 700;
+       margin: 0 0 20px;
+       display: flex;
+       align-items: center;
+       gap: 12px;
+     }
 
-      .small {
-        font-size: small;
-      }
+     .content-section h4::before {
+       content: '';
+       display: block;
+       width: 4px;
+       height: 24px;
+       background: var(--primary-gradient);
+       border-radius: 4px;
+     }
 
-      .mb-5 {
-        margin-bottom: 2rem;
-      }
+     .credentials-box {
+       background: var(--light);
+       border-radius: 8px;
+       padding: 24px;
+       border: 1px solid var(--gray-200);
+     }
 
-      .mb-4 {
-        margin-bottom: 1.5rem;
-      }
+     .credential-item {
+       display: flex;
+       align-items: center;
+       padding: 12px 0;
+       border-bottom: 1px solid var(--gray-200);
+     }
 
-      .mb-3 {
-        margin-bottom: 1rem;
-      }
+     .credential-item:last-child {
+       border: none;
+       padding-bottom: 0;
+     }
 
-      .mb-2 {
-        margin-bottom: 0.8rem;
-      }
+     .credential-label {
+       color: var(--gray-500);
+       font-size: 14px;
+       font-weight: 500;
+       width: 100px;
+     }
 
-      .mb-1 {
-        margin-bottom: 0.4rem;
-      }
+     .credential-value {
+       color: var(--dark);
+       font-size: 16px;
+       font-weight: 600;
+       font-family: monospace;
+       background: var(--gray-100);
+       padding: 4px 12px;
+       border-radius: 4px;
+     }
 
-      .mt-5 {
-        margin-top: 2rem;
-      }
+     .btn-container {
+       text-align: center;
+       margin: 32px 0;
+     }
 
-      .mt-4 {
-        margin-top: 1.5rem;
-      }
+     .btn {
+       display: inline-flex;
+       align-items: center;
+       gap: 8px;
+       background: var(--primary-gradient);
+       color: var(--light);
+       font-size: 16px;
+       font-weight: 600;
+       text-decoration: none;
+       padding: 16px 32px;
+       border-radius: 12px;
+       transition: all 0.2s;
+       box-shadow: 0 4px 6px -1px rgba(37,99,235,0.2);
+     }
 
-      .mt-3 {
-        margin-top: 1rem;
-      }
+     .btn:hover {
+       transform: translateY(-2px);
+       box-shadow: 0 8px 12px -1px rgba(37,99,235,0.4);
+     }
 
-      .mt-2 {
-        margin-top: 0.8rem;
-      }
+     .btn::after {
+       content: '→';
+       transition: transform 0.2s;
+     }
 
-      .mt-1 {
-        margin-top: 0.4rem;
-      }
+     .btn:hover::after {
+       transform: translateX(4px);
+     }
 
-      .ms-2 {
-        margin-left: 10px;
-      }
+     .alert {
+       background: var(--accent);
+       color: var(--dark);
+       font-size: 15px;
+       padding: 16px 24px;
+       border-radius: 12px;
+       margin: 32px 0;
+       display: flex;
+       align-items: center;
+       gap: 12px;
+     }
 
-      .ps-1 {
-        padding-left: 0.5rem;
-      }
+     .alert::before {
+       content: '⚠️';
+       font-size: 20px;
+     }
 
-      .p-0 {
-        padding: 0 !important;
-      }
+     .footer {
+       background: var(--dark);
+       color: var(--gray-300);
+       padding: 48px;
+       text-align: center;
+       position: relative;
+     }
 
-      .py-3 {
-        padding-top: 1rem;
-        padding-bottom: 1rem;
-      }
+     .footer::before {
+       content: '';
+       position: absolute;
+       top: 0;
+       left: 0;
+       right: 0;
+       height: 1px;
+       background: linear-gradient(to right, 
+         transparent 0%,
+         var(--gray-500) 50%,
+         transparent 100%
+       );
+     }
 
-      .py-2 {
-        padding-top: 0.6rem;
-        padding-bottom: 0.6rem;
-      }
+     .contact-grid {
+       display: grid;
+       grid-template-columns: repeat(2, 1fr);
+       gap: 24px;
+       max-width: 500px;
+       margin: 0 auto 32px;
+     }
 
-      .p-5 {
-        padding: 40px;
-      }
+     .contact-item {
+       background: rgba(255,255,255,0.05);
+       padding: 16px;
+       border-radius: 8px;
+       transition: all 0.2s;
+     }
 
-      .px-5 {
-        padding-left: 40px;
-        padding-right: 40px;
-      }
+     .contact-item:hover {
+       background: rgba(255,255,255,0.1);
+       transform: translateY(-2px);
+     }
 
-      .m-0 {
-        margin: 0 !important;
-      }
+     .contact-label {
+       color: var(--gray-400);
+       font-size: 14px;
+       margin-bottom: 8px;
+     }
 
-      .fw-400 {
-        font-weight: 400 !important;
-      }
+     .contact-value {
+       color: var(--light);
+       font-size: 15px;
+       font-weight: 500;
+     }
 
-      .lh-1 {
-        line-height: 1;
-      }
+     .contact-value a {
+       color: inherit;
+       text-decoration: none;
+     }
 
-      .text-muted {
-        color: rgba(70, 82, 143, 0.5) !important;
-      }
+     .divider {
+       height: 1px;
+       background: linear-gradient(to right, 
+         transparent 0%,
+         var(--gray-500) 50%,
+         transparent 100%
+       );
+       margin: 32px 0;
+     }
 
-      .divider {
-        width: 100%;
-        height: 1px;
-        border-bottom: 1px solid #cfcfcf;
-      }
+     .developer-info {
+       background: rgba(255,255,255,0.05);
+       padding: 20px;
+       border-radius: 12px;
+       margin-bottom: 24px;
+     }
 
-      .btn {
-        display: inline-block;
-        background-color: #e9e9e9;
-        color: #333333;
-        text-decoration: none;
-        padding: 10px 20px;
-        border-radius: 3px;
-        font-weight: bold;
-        transition: background-color 0.3s ease;
-      }
+     .developer-info h5 {
+       color: var(--gray-300);
+       margin-bottom: 12px;
+       font-size: 16px;
+     }
 
-      .btn-primary {
-        background-color: #4caf50;
-        color: #fff !important;
-      }
+     .developer-contact {
+       display: grid;
+       grid-template-columns: repeat(2, 1fr);
+       gap: 12px;
+     }
 
-      .btn-primary:hover {
-        background-color: #45a049;
-      }
+     .developer-contact a {
+       color: var(--accent);
+       text-decoration: none;
+       padding: 8px;
+       border-radius: 6px;
+       background: rgba(255,255,255,0.05);
+       transition: all 0.2s;
+       text-align: center;
+     }
 
-      .btn-warning {
-        background-color: #ffcb00;
-        color: #333333 !important;
-      }
+     .developer-contact a:hover {
+       background: rgba(255,255,255,0.1);
+       transform: translateY(-2px);
+     }
 
-      .btn-warning:hover {
-        background-color: #edbe02;
-      }
+     @media (max-width: 600px) {
+       .card-body {
+         padding: 32px 24px;
+       }
 
-      .link {
-        text-decoration: none;
-        color: inherit;
-      }
+       .contact-grid {
+         grid-template-columns: 1fr;
+       }
+     }
+   </style>
+ </head>
 
-      .uppercase {
-        text-transform: uppercase;
-      }
-    </style>
-  </head>
+ <body>
+   <div class="container">
+     <div class="card">
+       <div class="header">
+         <h2>Learnify</h2>
+         <p>Professional Learning Management System</p>
+       </div>
 
-  <body
-    style="
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      color: #46528f;
-      background-color: #ebf0fb;
-      padding: 20px;
-      line-height: 1.4;
-    "
-  >
-    <div class="container">
-      <div class="card">
-        <div class="header">
-          <h2 class="text-muted lh-1">SkyLearn</h2>
-          <p class="small text-muted fw-400 lh-1 m-0">
-            Your learning management system
-          </p>
-        </div>
-        <div class="card-body">
-          <h1 class="mb-5">🚀 Confirm your account</h1>
-          <h4>Dear <b>{{ user.get_full_name }}</b>,</h4>
-          <p>
-            A new student account with ID of <b>{{ user.username }}</b> has been
-            created for you. <br />
-            You're receiving this e-mail because the SkyLearn admin has given your
-            e-mail address to register an account on skylearn.com. <br />
-          </p>
-          <h5>Login credentials for your SkyLearn account:</h5>
-          <ul>
-            <li>ID: {{ user.username }}</li>
-            <li>Your password: {{ password }}</li>
-          </ul>
-          <p>To secure your account be sure to change your password.</p>
-          <p>
-            <a
-              href="http://localhost:3000/auth/confirm-email?key={{ key }}"
-              class="btn btn-primary"
-              >Confirm Email and Login</a
-            >
-          </p>
-          <p class="text-muted small">
-            <mark
-              >⚠ If you think this email shouldn't be coming to you, you can
-              simply ignore it.</mark
-            >
-          </p>
-        </div>
-        <div class="footer">
-          <p>Sincerely, skylearn team!</p>
-          <p>
-            For any inquiries or assistance, please contact our support team:
-          </p>
-          <p>Email: <a href="mailto:support@skylearn.com">support@skylearn.com</a></p>
-          <p>Phone: <a href="tel:251900000000">+(251) 90-000-0000</a></p>
-          <p>
-            &copy; 2023 <a href="skylearn.com">skylearn.com</a> | All rights reserved.
-          </p>
-        </div>
-      </div>
-    </div>
-  </body>
+       <div class="card-body">
+         <div class="welcome-banner">
+           <h1>Welcome to Learnify! 🎓</h1>
+           <p>Begin your learning journey with our state-of-the-art learning management system.</p>
+         </div>
+
+         <div class="content-section">
+           <h4>Account Details</h4>
+           <p>Dear <strong>{{ user.get_full_name }}</strong>, your student account has been successfully created.</p>
+           
+           <div class="credentials-box">
+             <div class="credential-item">
+               <span class="credential-label">User ID</span>
+               <span class="credential-value">{{ user.username }}</span>
+             </div>
+             <div class="credential-item">
+               <span class="credential-label">Password</span>
+               <span class="credential-value">{{ password }}</span>
+             </div>
+           </div>
+         </div>
+
+         <div class="content-section">
+           <h4>Next Steps</h4>
+           <ol style="margin-left: 24px; color: var(--gray-500);">
+             <li>Click the "Get Started" button below to confirm your email</li>
+             <li>Log in to your account using your credentials</li>
+             <li>Change your password for security purposes</li>
+             <li>Complete your student profile</li>
+             <li>Start exploring available courses</li>
+           </ol>
+         </div>
+
+         <div class="btn-container">
+           <a href="http://localhost:3000/auth/confirm-email?key={{ key }}" class="btn">
+             Get Started
+           </a>
+         </div>
+
+         <div class="alert">
+           If you did not request this account, please disregard this email. No further action is needed.
+         </div>
+       </div>
+
+       <div class="footer">
+         <div class="contact-grid">
+           <div class="contact-item">
+             <div class="contact-label">Email Support</div>
+             <div class="contact-value">
+               <a href="mailto:learnifylms2025@gmail.com">learnifylms2025@gmail.com</a>
+             </div>
+           </div>
+           <div class="contact-item">
+             <div class="contact-label">Call/WhatsApp</div>
+             <div class="contact-value">
+               <a href="tel:+254796611599">+254 796 611 599</a>
+             </div>
+           </div>
+         </div>
+
+         <div class="divider"></div>
+
+         <div class="developer-info">
+           <h5>Developer Contact</h5>
+           <div class="developer-contact">
+             <a href="tel:+254719408098">
+               Call: +254 719 408 098
+             </a>
+             <a href="https://wa.me/254719408098">
+               WhatsApp
+             </a>
+           </div>
+         </div>
+
+         <p style="color: var(--gray-400); font-size: 14px;">
+           &copy; 2025 Learnify LMS. All rights reserved.
+         </p>
+       </div>
+     </div>
+   </div>
+ </body>
 </html>
